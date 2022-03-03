@@ -1,0 +1,55 @@
+<div class="center-container">
+  <form [formGroup]="submissionForm">
+    <div style="height: 500px;">
+        <mat-toolbar>
+          <span class="center-text">Contact Us Form</span>
+        </mat-toolbar>
+
+        <mat-divider class="divider"></mat-divider>
+
+        <div class="input-container">
+          <mat-form-field class="input-prompt" appearance="fill">
+            <mat-label>First Name</mat-label>
+            <textarea matInput rows="1" placeholder="What is your first name?" formControlName="firstName"></textarea>
+            <small class="text-danger" *ngIf="f.firstName.errors?.required && f.firstName.touched">
+              Field is required
+            </small>
+          </mat-form-field>
+          
+          <mat-form-field class="input-prompt" appearance="fill">
+            <mat-label>Last Name</mat-label>
+            <textarea matInput rows="1" placeholder="What is your last name?" formControlName="lastName"></textarea>
+            <small class="text-danger" *ngIf="f.lastName.errors?.required && f.lastName.touched">
+              Field is required
+            </small>
+          </mat-form-field>
+
+          <mat-form-field class="input-prompt" appearance="fill">
+            <mat-label>Email</mat-label>
+            <textarea matInput rows="1" placeholder="What email can we use for you?" formControlName="email"></textarea>
+            <small class="text-danger" *ngIf="f.email.errors?.required && f.email.touched">
+              Field is required
+            </small>
+            <small class="text-danger" *ngIf="submissionForm.hasError('email', 'email')">
+              Invalid email
+            </small>
+          </mat-form-field>
+
+          <mat-form-field class="input-prompt" appearance="fill">
+            <mat-label>Message</mat-label>
+            <textarea matInput rows="2" placeholder="What is something you'd want to tell us?" formControlName="message"></textarea>
+          </mat-form-field>
+        </div>
+    </div>
+  </form>
+
+  <mat-divider class="divider"></mat-divider>
+
+  <button 
+    mat-raised-button
+    [disabled]="!submissionForm.valid"
+    color="primary"
+    (click)="onSubmit()"
+    >Submit
+  </button>  
+</div>
