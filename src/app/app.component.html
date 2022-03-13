@@ -1,12 +1,11 @@
 <div class="center-container">
-  <form [formGroup]="submissionForm">
-    <div style="height: 500px;">
-        <mat-toolbar>
-          <span class="center-text">Contact Us Form</span>
-        </mat-toolbar>
-
-        <mat-divider class="divider"></mat-divider>
-
+  <mat-toolbar>
+    <span class="center-text">Contact Us Form</span>
+  </mat-toolbar>
+  <mat-divider class="divider"></mat-divider>
+  <div *ngIf="!formSubmitted">
+    <form [formGroup]="submissionForm">
+      <div style="height: 500px;">
         <div class="input-container">
           <mat-form-field class="input-prompt" appearance="fill">
             <mat-label>First Name</mat-label>
@@ -40,16 +39,21 @@
             <textarea matInput rows="2" placeholder="What is something you'd want to tell us?" formControlName="message"></textarea>
           </mat-form-field>
         </div>
-    </div>
-  </form>
+      </div>
+    </form>
 
-  <mat-divider class="divider"></mat-divider>
+    <mat-divider class="divider"></mat-divider>
 
-  <button 
-    mat-raised-button
-    [disabled]="!submissionForm.valid"
-    color="primary"
-    (click)="onSubmit()"
-    >Submit
-  </button>  
+    <button 
+      mat-raised-button
+      [disabled]="!submissionForm.valid"
+      color="primary"
+      (click)="onSubmit()"
+      >Submit
+    </button>  
+  </div>
+  
+  <div *ngIf="formSubmitted">
+    <mat-label class="center-text">Thank you for your submission! We've received your request, but you can also refresh the page to resubmit your info.</mat-label>
+  </div>
 </div>

@@ -8,6 +8,8 @@ import * as saveAs from 'file-saver';
   styleUrls: ['./app.component.css']
 })
 export class AppSurveyComponent {
+  public formSubmitted = false;
+
   public submissionForm = this.formBuilder.group({
     firstName: '',
     lastName: '',
@@ -31,9 +33,24 @@ export class AppSurveyComponent {
     return this.submissionForm.controls;
   }
 
-  onSubmit() {
-    let file = new Blob([JSON.stringify(this.submissionForm.getRawValue())], { type: 'text/json;charset=utf-8' });
-    saveAs(file, 'results.json')
-    // api call to store data would be here probably
+  async onSubmit() {
+    const body = this.submissionForm.getRawValue();
+
+    const response = await fetch("http://localhost:6060", {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {'Content-Type': 'application/json'} 
+    });
+    
+    if (!response.ok) 
+    { 
+        console.error("Error: Unexpected response code");
+    }
+    else if (response.status >= 400) {
+        console.error('HTTP Error: '+response.status+' - '+response.status);
+    }
+    else {
+      this.formSubmitted = true;
+    }
   }
 }
